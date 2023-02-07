@@ -8,3 +8,4 @@ client.once(Events.ClientReady, (c) => {
 });
 
 client.login(TOKEN);
+
