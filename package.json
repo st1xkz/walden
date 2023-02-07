@@ -1,0 +1,23 @@
+{
+  "name": "jarvis",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/st1xkz/jarvis.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/st1xkz/jarvis/issues"
+  },
+  "homepage": "https://github.com/st1xkz/jarvis#readme",
+  "dependencies": {
+    "discord.js": "^14.7.1"
+  }
+}
