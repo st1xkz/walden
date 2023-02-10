@@ -7,6 +7,7 @@ const { TOKEN } = process.env;
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 client.commands = new Collection();
+client.application.commands.clear();
 
 const commandsPath = path.join(__dirname, "commands");
 const commandFiles = fs
