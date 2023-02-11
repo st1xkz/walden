@@ -1,6 +1,7 @@
 const fs = require("node:fs");
 const path = require("node:path");
 const { Client, Events, GatewayIntentBits, Collection } = require("discord.js");
+require("./deploy-commands.js");
 require("dotenv").config();
 const { TOKEN } = process.env;
 
