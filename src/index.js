@@ -1,10 +1,28 @@
 const fs = require("node:fs");
 const path = require("node:path");
-const { Client, Events, GatewayIntentBits, Collection } = require("discord.js");
+const {
+  Client,
+  Events,
+  GatewayIntentBits,
+  Collection,
+  ActivityType,
+} = require("discord.js");
 require("dotenv").config();
 const { TOKEN } = process.env;
+const moment = require("moment");
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const client = new Client({
+  intents: [GatewayIntentBits.Guilds],
+  presence: {
+    status: "online",
+    activities: [
+      {
+        name: `the continents! | ${client.guilds.cache.size} servers`,
+        type: ActivityType.Watching,
+      },
+    ],
+  },
+});
 
 client.commands = new Collection();
 
@@ -40,16 +58,16 @@ client.on(Events.InteractionCreate, async (interaction) => {
     await command.execute(interaction);
   } catch (error) {
     console.error(error);
-    await interaction.reply({
-      content: "There was an error while executing the command!",
-      ephemeral: true,
-    });
+    await interaction.reply(
+      `Something went wrong during invocation of command \`${interaction.commandName}\`.`
+    );
   }
   console.log(interaction);
 });
 
 client.once(Events.ClientReady, (c) => {
-  console.log(`Ready! Logged in as ${c.user.tag}`);
+  console.log(`Logged in as ${c.user.tag}`);
+  client.startTime = moment();
 });
 
 client.login(TOKEN);
