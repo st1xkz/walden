@@ -36,7 +36,7 @@ module.exports = {
       return;
     }
 
-    const src = obj.callback.__code;
+    const src = obj.callback.toString();
     var filename = obj.callback.__filename;
     const module = obj.callback.__module;
 
