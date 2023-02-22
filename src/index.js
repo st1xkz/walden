@@ -13,15 +13,6 @@ const moment = require("moment");
 
 const client = new Client({
   intents: [GatewayIntentBits.Guilds],
-  presence: {
-    status: "online",
-    activities: [
-      {
-        name: `the continents! | ${client.guilds.cache.size} servers`,
-        type: ActivityType.Watching,
-      },
-    ],
-  },
 });
 
 client.commands = new Collection();
@@ -68,6 +59,12 @@ client.on(Events.InteractionCreate, async (interaction) => {
 client.once(Events.ClientReady, (c) => {
   console.log(`Logged in as ${c.user.tag}`);
   client.startTime = moment();
+  client.user.setPresence({
+    activities: {
+      name: `the continents! | ${client.guilds.cache.size} servers`,
+      type: ActivityType.Watching,
+    },
+  });
 });
 
 client.login(TOKEN);
