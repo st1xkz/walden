@@ -1,18 +1,23 @@
-const { REST, Routes } = require("discord.js");
+const { REST } = require("@discordjs/rest");
+const { Routes } = require("discord-api-types/v9");
 require("dotenv").config();
 const { TOKEN, clientId } = process.env;
 const fs = require("node:fs");
+const { join } = require("node:path");
 
-const commands = [];
+commands = [];
 // Grab all command files from the commands directory you created earlier
-const commandFiles = fs
-  .readdirSync("./src/commands")
-  .filter((file) => file.endsWith(".js"));
+const commandFolders = fs.readdirSync("./src/commands");
 
 // Grab the SlashCommandBuilder#toJSON() output of each command's data for deployment
-for (const file of commandFiles) {
-  const command = require(`./commands/${file}`);
-  commands.push(command.data.toJSON());
+for (const folder of commandFolders) {
+  const commandFiles = fs
+    .readdirSync(`./src/commands/${folder}`)
+    .filter((file) => file.endsWith(".js"));
+  for (const file of commandFiles) {
+    const command = require(`./commands/${folder}/${file}`);
+    commands.push(command.data.toJSON());
+  }
 }
 
 // Construct and prepare an instance of the REST module
