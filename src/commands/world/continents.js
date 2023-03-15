@@ -1,91 +1,102 @@
 const {
   ActionRowBuilder,
-  Events,
   StringSelectMenuBuilder,
   SlashCommandBuilder,
   AttachmentBuilder,
   EmbedBuilder,
-  ComponentType,
 } = require("discord.js");
+const {
+  buttonPages,
+  sourcePages,
+} = require("../../core/functions/pagination.js");
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("continent")
     .setDescription("Shows information on the continent that was selected"),
   async execute(interaction) {
-    const file = new AttachmentBuilder("assets/continents/af/globe_af.png");
-    const row = new ActionRowBuilder().addComponents(
+    const select = new ActionRowBuilder().addComponents(
       new StringSelectMenuBuilder()
         .setCustomId("continents")
         .setPlaceholder("Select a continent")
         .addOptions(
           {
             label: "Africa",
-            value: "first_option",
+            value: "af",
+            emoji: "🪘",
           },
           {
             label: "Asia",
-            value: "second_option",
+            value: "as",
+            emoji: "🍚",
           },
           {
             label: "Europe",
-            value: "third_value",
+            value: "eu",
+            emoji: "🏰",
           },
           {
             label: "North America",
-            value: "fourth_value",
+            value: "na",
+            emoji: "🦬",
           },
           {
             label: "South America",
-            value: "fifth_value",
+            value: "sa",
+            emoji: "🦙",
           },
           {
             label: "Antarctica",
-            value: "sixth_value",
+            value: "an",
+            emoji: "🐧",
           },
           {
-            label: "Oceania",
-            value: "seventh_value",
+            label: "Australia",
+            value: "au",
+            emoji: "🦘",
           }
         )
     );
 
-    await interaction.reply({
-      content: "Please select a continent:",
-      components: [row],
-    });
+    const continents_map = new AttachmentBuilder(
+      "assets/continents/continents_map.png"
+    ).setName("continents_map.png");
+    const continents = new EmbedBuilder()
+      .setTitle("Continents")
+      .setDescription(
+        "A continent is a large continuous mass of land typically viewed as a single region. There are seven continents: Africa, Asia, Europe, North America, South America, Antarctica, and Australia (not listed in any specific order)."
+      )
+      .setImage("attachment://continents_map.png")
+      .setTimestamp()
+      .setFooter({ text: "Select a continent to learn more!" });
+
+    const sources = new EmbedBuilder()
+      .setTitle("Sources")
+      .setDescription(
+        "• https://www.britannica.com/science/continent\n" +
+          "• https://www.mapsofindia.com/world-map/continents.html"
+      )
+      .setTimestamp();
+
+    const pages = [continents, sources];
+
+    sourcePages(interaction, pages, [continents_map]);
 
     const filter = (interaction) =>
       interaction.customId === "continents" &&
       interaction.user.id === interaction.user.id;
     const collector = interaction.channel.createMessageComponentCollector({
       filter,
-      time: 15000,
+      time: 300000,
     });
 
     collector.on("collect", (interaction) => {
-      // Get the selected option
-      const selectedOption = interaction.values.find(
-        (option) => option.value === interaction.values[0]
-      );
-
-      // Create an embed with information about the selected option
-      const embed = new EmbedBuilder()
-        .setTitle("Africa")
-        .setDescription(`stuff`)
-        .setThumbnail("attachment://globe_af.png");
-
       // Update the original message with the embed
-      interaction.update({
-        content: "",
-        components: [row],
-        embeds: [embed],
-        files: [file],
-      });
       console.log(`User selected ${interaction.values} from the select menu.`);
     });
 
     collector.on("end", (collected) => {
+      interaction.editReply({ components: [] });
       console.log(`Collected ${collected.size} interactions.`);
       return;
     });

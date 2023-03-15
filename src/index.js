@@ -8,7 +8,7 @@ const {
   ActivityType,
 } = require("discord.js");
 require("dotenv").config();
-const { TOKEN } = process.env;
+const TOKEN = process.env["TOKEN"];
 const moment = require("moment");
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
@@ -37,7 +37,7 @@ const readCommands = (dir) => {
 readCommands(commandsPath);
 
 client.on(Events.InteractionCreate, async (interaction) => {
-  console.log(interaction);
+  if (!interaction.isChatInputCommand()) return;
 
   const command = interaction.client.commands.get(interaction.commandName);
 
@@ -52,13 +52,11 @@ client.on(Events.InteractionCreate, async (interaction) => {
     console.error(error);
     if (interaction.replied || interaction.deferred) {
       await interaction.followUp({
-        content: "There was an error while executing this command!",
-        ephemeral: true,
+        content: `Something went wrong during invocation of command \`${interaction.commandName}\`.`,
       });
     } else {
       await interaction.reply({
-        content: "There was an error while executing this command!",
-        ephemeral: true,
+        content: `Something went wrong during invocation of command \`${interaction.commandName}\`.`,
       });
     }
   }

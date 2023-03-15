@@ -1,7 +1,8 @@
 const { REST } = require("@discordjs/rest");
 const { Routes } = require("discord-api-types/v9");
 require("dotenv").config();
-const { TOKEN, clientId } = process.env;
+const TOKEN = process.env["TOKEN"];
+const clientId = process.env["clientId"];
 const fs = require("node:fs");
 const { join } = require("node:path");
 
