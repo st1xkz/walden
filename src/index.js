@@ -8,7 +8,7 @@ const {
   ActivityType,
 } = require("discord.js");
 require("dotenv").config();
-const TOKEN = process.env["TOKEN"];
+const { TOKEN } = process.env;
 const moment = require("moment");
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
