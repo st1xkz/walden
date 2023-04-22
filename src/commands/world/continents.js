@@ -5,10 +5,7 @@ const {
   AttachmentBuilder,
   EmbedBuilder,
 } = require("discord.js");
-const {
-  buttonPages,
-  sourcePages,
-} = require("../../core/functions/pagination.js");
+const { sourcePages } = require("../../core/functions/pagination.js");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -61,6 +58,7 @@ module.exports = {
     const continents_map = new AttachmentBuilder(
       "assets/continents/continents_map.png"
     ).setName("continents_map.png");
+
     const continents = new EmbedBuilder()
       .setTitle("Continents")
       .setDescription(
@@ -74,17 +72,14 @@ module.exports = {
       .setTitle("Sources")
       .setDescription(
         "• https://www.britannica.com/science/continent\n" +
-          "• https://www.mapsofindia.com/world-map/continents.html"
-      )
-      .setTimestamp();
+        "• https://www.mapsofindia.com/world-map/continents.html"
+      );
 
     const pages = [continents, sources];
 
     sourcePages(interaction, pages, [continents_map]);
 
-    const filter = (interaction) =>
-      interaction.customId === "continents" &&
-      interaction.user.id === interaction.user.id;
+    const filter = (interaction) => interaction.customId === "continents";
     const collector = interaction.channel.createMessageComponentCollector({
       filter,
       time: 300000,

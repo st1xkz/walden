@@ -27,26 +27,26 @@ module.exports = {
       .setTitle("Statistics for Walden")
       .setDescription(
         `Guild Count: **${interaction.client.guilds.cache.size}**\n` +
-          `User Count: **${interaction.client.guilds.cache.reduce(
-            (acc, guild) => acc + guild.memberCount,
-            0
-          )}**\n` +
-          `Command Count: **${interaction.client.commands.size}**\n\n` +
-          `Uptime: **${uptime}**\n` +
-          `CPU Time: **${await osu.cpu.usage().then(osu.cpuPercentage)}**\n` +
-          `Memory Usage: **${await osu.mem
-            .info()
-            .then((obj) => obj.usedMemMb)}/${await osu.mem
-            .info()
-            .then((obj) => obj.totalMemMb)} MiB (${await osu.mem
-            .info()
-            .then((obj) => obj.freeMemPercentage)}%)**\n\n` +
-          `Platform: **${
-            process.platform.charAt(0).toUpperCase() + process.platform.slice(1)
-          }**\n` +
-          `Language: **JavaScript**\n` +
-          `Library: **discord.js v${version}**\n` +
-          `Node version: **${process.version}**`
+        `User Count: **${interaction.client.guilds.cache.reduce(
+          (acc, guild) => acc + guild.memberCount,
+          0
+        )}**\n` +
+        `Command Count: **${interaction.client.commands.size}**\n\n` +
+        `Uptime: **${uptime}**\n` +
+        `CPU Time: **${await osu.cpu.usage().then(osu.cpuPercentage)}**\n` +
+        `Memory Usage: **${await osu.mem
+          .info()
+          .then((obj) => obj.usedMemMb)}/${await osu.mem
+          .info()
+          .then((obj) => obj.totalMemMb)} MiB (${await osu.mem
+          .info()
+          .then((obj) => obj.freeMemPercentage)}%)**\n\n` +
+        `Platform: **${
+          process.platform.charAt(0).toUpperCase() + process.platform.slice(1)
+        }**\n` +
+        `Language: **JavaScript**\n` +
+        `Library: **discord.js v${version}**\n` +
+        `Node version: **${process.version}**`
       )
       .setTimestamp()
       .setThumbnail(interaction.client.user.displayAvatarURL())
