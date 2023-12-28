@@ -71,8 +71,8 @@ module.exports = {
     const sources = new EmbedBuilder()
       .setTitle("Sources")
       .setDescription(
-        "• https://www.britannica.com/science/continent\n" +
-        "• https://www.mapsofindia.com/world-map/continents.html"
+        "- https://www.britannica.com/science/continent\n" +
+        "- https://www.mapsofindia.com/world-map/continents.html"
       );
 
     const pages = [continents, sources];
